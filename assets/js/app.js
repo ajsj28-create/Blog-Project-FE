@@ -232,6 +232,11 @@ const onLike = async (ele) => {
 };
 
 const onDelete = (ele) => {
+    blogsForm.reset()
+    if(!updateBtn.className.includes('d-none')){
+        updateBtn.classList.add('d-none')
+        addBtn.classList.remove('d-none')
+    }
     let deleteId = ele.closest('.col-md-6').id
     let deleteTitle = document.getElementById(deleteId).querySelector('.card-body h5').innerHTML
     let delete_url = `${allData_url}/${deleteId}`
