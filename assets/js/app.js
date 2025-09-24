@@ -15,7 +15,7 @@ const updateBtn = document.getElementById('updateBtn');
 
 const escapeHtml = (str) => {
     if(!str){
-        return `Not Available`
+        return `NA`
     }else{
         return String(str)
           .replace(/&/g, "&amp;")
@@ -183,10 +183,20 @@ const onBlogAdd = async (eve) => {
 };
 
 const onView = async (ele) => {
+    blogsForm.reset()
+    if(!updateBtn.className.includes('d-none')){
+        updateBtn.classList.add('d-none')
+        addBtn.classList.remove('d-none')
+    } 
     let viewId = ele.closest('.col-md-6').id
     let view_url = `${allData_url}/${viewId}`
     let data = await makeApiCall('GET', view_url, null)
-    let content = data.content
+    let content = `
+            <h5 class="m-0">${data.title}</h5>
+            <span>${getTimestamp(data)}<span>
+            <p class="mt-2">${data.content}</p>
+            <span>Likes: ${data.likesCount}</span>
+            `
     showAlertContainer(content, 'info', 7000)
     window.scroll({
         top: 0,
